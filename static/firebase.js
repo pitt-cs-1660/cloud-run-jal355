@@ -116,11 +116,23 @@ async function vote(team) {
     // refresh the token and return a new one.
     try {
       const token = await createIdToken();
+      const response = await fetch('http://localhost:8000/vote', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': `Bearer ${token}`
+          },
+          body: `team=${encodeURIComponent(team)}`
+      });
 
-      /*
-       * ++++ YOUR CODE HERE ++++
-       */
-      window.alert(`Not implemented yet!`);
+      if (response.ok) {
+        const data = await response.json();
+        window.alert(`Vote submitted successfully! Server says: ${data.message || 'Success'}`);
+      } else {
+        const errorData = await response.json();
+        console.error('Vote failed:', errorData);
+        window.alert(`Vote failed: ${errorData.detail || 'Unknown error'}`);
+      }
 
     } catch (err) {
       console.log(`Error when submitting vote: ${err}`);
