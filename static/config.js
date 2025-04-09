@@ -14,6 +14,6 @@
  * @type {{apiKey: string, authDomain: string}}
  */
 const config = {
-  apiKey: 'AIzaSyDla7asufRRk7bIUKOSyWS4vgXaGmWO8Lw',
-  authDomain: 'votes-aa309.firebaseapp.com',
+  apiKey: "AIzaSyDla7asufRRk7bIUKOSyWS4vgXaGmWO8Lw",
+  authDomain: "votes-aa309.firebaseapp.com",
 };

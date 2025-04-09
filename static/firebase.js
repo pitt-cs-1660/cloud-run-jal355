@@ -111,12 +111,14 @@ function toggle() {
 async function vote(team) {
   console.log(`Submitting vote for ${team}...`);
   if (firebase.auth().currentUser || authDisabled()) {
+    console.log("Vote function called with:", team); // <--- add this
+
     // Retrieve JWT to identify the user to the Identity Platform service.
     // Returns the current token if it has not expired. Otherwise, this will
     // refresh the token and return a new one.
     try {
       const token = await createIdToken();
-      const response = await fetch('http://localhost:8000/vote', {
+      const response = await fetch('/', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -125,15 +127,26 @@ async function vote(team) {
           body: `team=${encodeURIComponent(team)}`
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        window.alert(`Vote submitted successfully! Server says: ${data.message || 'Success'}`);
-      } else {
-        const errorData = await response.json();
-        console.error('Vote failed:', errorData);
-        window.alert(`Vote failed: ${errorData.detail || 'Unknown error'}`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
       }
 
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const getResponse = await fetch("/", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (!getResponse.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
     } catch (err) {
       console.log(`Error when submitting vote: ${err}`);
       window.alert('Something went wrong... Please try again!');
