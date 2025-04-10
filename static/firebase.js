@@ -132,21 +132,9 @@ async function vote(team) {
       }
 
       const data = await response.json();
+
+      window.location.reload();
       
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const getResponse = await fetch("/", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (!getResponse.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
     } catch (err) {
       console.log(`Error when submitting vote: ${err}`);
       window.alert('Something went wrong... Please try again!');
