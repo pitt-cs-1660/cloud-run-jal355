@@ -29,14 +29,14 @@
       <div class="col s6 m5 offset-m1">
         <div class="{% if lead_team == 'TABS' %}card-panel teal lighten-4{% else %}card-panel{% endif %}">
           <i class="material-icons large">》</i>
-          <h3>{{tabs_count}} votes</h3>
+          <h3 id="countTabs">{{tabs_count}} votes</h3>
           <button class="btn" id="voteTabs">Vote for TABS</button>
         </div>
       </div>
       <div class="col s6 m5">
         <div class="{% if lead_team == 'SPACES' %}card-panel teal lighten-4{% else %}card-panel{% endif %}">
           <i class="material-icons large">⎵</i>
-          <h3>{{spaces_count}} votes</h3>
+          <h3 id="countSpaces">{{spaces_count}} votes</h3>
           <button class="btn" id="voteSpaces">Vote for SPACES</button>
         </div>
       </div>
@@ -54,10 +54,15 @@
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      <!-- add Event Listener "click" to the vote -->
-      // document.getElementById("voteTabs").addEventListener("click", function () {
-      //   vote("TABS");
-      // });
+      document.getElementById("signInButton").addEventListener("click", function () {
+        toggle();
+      });
+      document.getElementById("voteTabs").addEventListener("click", function () {
+        vote("TABS");
+      }); 
+      document.getElementById("voteSpaces").addEventListener("click", function () {
+        vote("SPACES");
+      });
     })
   </script>
 </body>
